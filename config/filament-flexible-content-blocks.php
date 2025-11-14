@@ -38,16 +38,16 @@ return [
     |
     */
     'default_flexible_blocks' => [
-        VideoBlock::class,
+        // VideoBlock::class,
         ImageBlock::class,
-        HtmlBlock::class,
+        // HtmlBlock::class,
         TextImageBlock::class,
-        OverviewBlock::class,
+        // OverviewBlock::class,
         QuoteBlock::class,
-        CallToActionBlock::class,
-        CardsBlock::class,
-        TemplateBlock::class,
-        CollapsibleGroupBlock::class,
+        // CallToActionBlock::class,
+        // CardsBlock::class,
+        // TemplateBlock::class,
+        // CollapsibleGroupBlock::class,
     ],
 
     /*

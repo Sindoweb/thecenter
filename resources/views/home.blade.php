@@ -57,7 +57,7 @@
                         </div>
                         <div>
                             <a
-                                href="#"
+                                href="{{ route('booking.create', ['locale' => app()->getLocale()]) }}"
                                 class="inline-flex items-center justify-center w-full px-8 py-4 text-white rounded-lg font-semibold transition-all duration-200 shadow-sm hover:shadow-md"
                                 style="background-color: rgb(140 198 62);"
                                 onmouseover="this.style.backgroundColor='rgb(120 178 42)'"

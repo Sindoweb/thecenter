@@ -5,7 +5,20 @@
       "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan tinker --execute=\"App\\Models\\PricingRule::where(''duration_type'', ''kwartaal'')->get([''id'', ''space_id'', ''price'', ''base_duration_type''])->each(fn($r) => print_r([''id'' => $r->id, ''space_id'' => $r->space_id, ''price'' => $r->price, ''base_duration_type'' => $r->base_duration_type?->value]));\")",
       "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" vendor/bin/pint --dirty)",
       "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan make:controller HomeController)",
-      "WebFetch(domain:www.het-groene-huis.be)"
+      "WebFetch(domain:www.het-groene-huis.be)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan make:controller BookingController)",
+      "Bash(composer show:*)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan make:model Page --no-interaction)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan make:filament-resource Page --generate --no-interaction)",
+      "Bash(xargs basename:*)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan make:filament-resource Page --no-interaction)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan make:migration make_pages_intro_and_hero_fields_nullable --table=pages --no-interaction)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan migrate)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan tinker --execute=\"echo json_encode(\\Illuminate\\Support\\Facades\\Schema::getColumnListing(''pages''));\")",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan make:migration add_parent_id_and_other_fields_to_pages_table --table=pages --no-interaction)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan vendor:publish --provider=\"Spatie\\MediaLibrary\\MediaLibraryServiceProvider\" --tag=\"medialibrary-migrations\")",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan route:list --path=admin/pages)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan tinker --execute=\"echo json_encode(App\\Models\\Page::all([''id'', ''slug''])->toArray());\")"
     ],
     "deny": [],
     "ask": []
