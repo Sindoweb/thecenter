@@ -19,7 +19,7 @@ class SpacesAndPricingSeeder extends Seeder
             'slug' => 'the-glow',
             'description' => 'Intimate conference room perfect for small meetings and focused work sessions. Can be combined with The Ray to form The Universe, or used as The Sun for accommodation.',
             'type' => SpaceType::ConferenceRoom,
-            'capacity' => 6,
+            'capacity' => 8,
             'features' => [
                 'WiFi',
                 'Projector',
@@ -37,7 +37,7 @@ class SpacesAndPricingSeeder extends Seeder
             'slug' => 'the-ray',
             'description' => 'Spacious conference room ideal for medium-sized meetings. Can be combined with The Glow to form The Universe, or used as The Moon for accommodation.',
             'type' => SpaceType::ConferenceRoom,
-            'capacity' => 10,
+            'capacity' => 12,
             'features' => [
                 'WiFi',
                 'Large Screen Display',
@@ -65,7 +65,7 @@ class SpacesAndPricingSeeder extends Seeder
             'slug' => 'the-universe',
             'description' => 'Our largest conference space, created by combining The Glow and The Ray. Perfect for larger meetings, workshops, and events.',
             'type' => SpaceType::Combined,
-            'capacity' => 16,
+            'capacity' => 20,
             'features' => [
                 'WiFi',
                 'Multiple Displays',
@@ -165,42 +165,40 @@ class SpacesAndPricingSeeder extends Seeder
         // The Glow pricing
         PricingRule::create([
             'space_id' => $theGlow->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::HalfDay,
-            'price' => 200.00,
+            'price' => 140.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
         PricingRule::create([
             'space_id' => $theGlow->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::FullDay,
-            'price' => 380.00,
+            'price' => 250.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
         PricingRule::create([
             'space_id' => $theGlow->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::Quarterly,
-            'price' => 200.00,
-            'discount_percentage' => 10.00,
+            'base_duration_type' => DurationType::HalfDay,
+            'price' => 140.00,
+            'discount_percentage' => 20.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
         PricingRule::create([
             'space_id' => $theGlow->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::Quarterly,
-            'price' => 380.00,
-            'discount_percentage' => 10.00,
+            'base_duration_type' => DurationType::FullDay,
+            'price' => 250.00,
+            'discount_percentage' => 20.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
@@ -208,42 +206,40 @@ class SpacesAndPricingSeeder extends Seeder
         // The Ray pricing
         PricingRule::create([
             'space_id' => $theRay->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::HalfDay,
-            'price' => 275.00,
+            'price' => 160.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
         PricingRule::create([
             'space_id' => $theRay->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::FullDay,
-            'price' => 500.00,
+            'price' => 300.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
         PricingRule::create([
             'space_id' => $theRay->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::Quarterly,
-            'price' => 275.00,
-            'discount_percentage' => 10.00,
+            'base_duration_type' => DurationType::HalfDay,
+            'price' => 160.00,
+            'discount_percentage' => 20.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
         PricingRule::create([
             'space_id' => $theRay->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::Quarterly,
-            'price' => 500.00,
-            'discount_percentage' => 10.00,
+            'base_duration_type' => DurationType::FullDay,
+            'price' => 300.00,
+            'discount_percentage' => 20.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
@@ -271,32 +267,31 @@ class SpacesAndPricingSeeder extends Seeder
 
         PricingRule::create([
             'space_id' => $theUniverse->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::Quarterly,
+            'base_duration_type' => DurationType::HalfDay,
             'price' => 400.00,
-            'discount_percentage' => 10.00,
+            'discount_percentage' => 20.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
         PricingRule::create([
             'space_id' => $theUniverse->id,
-
             'booking_type' => BookingType::Conferentie,
             'duration_type' => DurationType::Quarterly,
+            'base_duration_type' => DurationType::FullDay,
             'price' => 700.00,
-            'discount_percentage' => 10.00,
+            'discount_percentage' => 20.00,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
         // === B&B / Accommodation Pricing ===
 
-        // The Sun (single room)
+        // The Sun (single room, 1 night, up to 2 people)
         PricingRule::create([
             'space_id' => $theSun->id,
-
             'booking_type' => BookingType::Accommodation,
             'duration_type' => DurationType::Night,
             'price' => 110.00,
@@ -305,10 +300,9 @@ class SpacesAndPricingSeeder extends Seeder
             'valid_from' => $validFrom,
         ]);
 
-        // The Moon (single room)
+        // The Moon (single room, 1 night, up to 2 people)
         PricingRule::create([
             'space_id' => $theMoon->id,
-
             'booking_type' => BookingType::Accommodation,
             'duration_type' => DurationType::Night,
             'price' => 110.00,
@@ -317,11 +311,9 @@ class SpacesAndPricingSeeder extends Seeder
             'valid_from' => $validFrom,
         ]);
 
-        // Both rooms package (4 people total)
-        // Note: This will need special booking logic to book both spaces together
+        // Both rooms package (2 rooms, 1 night, up to 4 people)
         PricingRule::create([
             'space_id' => $theSun->id,
-
             'booking_type' => BookingType::Package,
             'duration_type' => DurationType::Night,
             'price' => 200.00,
@@ -331,35 +323,27 @@ class SpacesAndPricingSeeder extends Seeder
             'valid_from' => $validFrom,
         ]);
 
-        // Private full rental (both rooms, exclusive use)
+        // Weekend package: The Sun (Fri-Sun) + light therapy
+        // Base accommodation + €50 per person per 2-hour light therapy session
+        // Price shown is base accommodation only; light therapy sessions added separately
         PricingRule::create([
             'space_id' => $theSun->id,
-
             'booking_type' => BookingType::Package,
             'duration_type' => DurationType::Night,
-            'price' => 320.00,
-            'is_active' => true,
-            'valid_from' => $validFrom,
-        ]);
-
-        // Weekend package (Friday-Sunday including light therapy)
-        PricingRule::create([
-            'space_id' => $theSun->id,
-
-            'booking_type' => BookingType::Package,
-            'duration_type' => DurationType::Night,
-            'price' => 160.00, // 110 + 50 per person
+            'price' => 110.00, // Base price, light therapy sessions charged at +€50/person/session
             'max_people' => 2,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
+        // Weekend package: The Moon (Fri-Sun) + light therapy
+        // Base accommodation + €50 per person per 2-hour light therapy session
+        // Price shown is base accommodation only; light therapy sessions added separately
         PricingRule::create([
             'space_id' => $theMoon->id,
-
             'booking_type' => BookingType::Package,
             'duration_type' => DurationType::Night,
-            'price' => 160.00, // 110 + 50 per person
+            'price' => 110.00, // Base price, light therapy sessions charged at +€50/person/session
             'max_people' => 2,
             'is_active' => true,
             'valid_from' => $validFrom,
@@ -367,10 +351,9 @@ class SpacesAndPricingSeeder extends Seeder
 
         // === Co-Working Pricing ===
 
-        // Day pass
+        // Day pass (one-time booking)
         PricingRule::create([
             'space_id' => $coWorking->id,
-
             'booking_type' => BookingType::CoWorking,
             'duration_type' => DurationType::DayPass,
             'price' => 35.00,
@@ -378,43 +361,46 @@ class SpacesAndPricingSeeder extends Seeder
             'valid_from' => $validFrom,
         ]);
 
-        // Monthly subscriptions
+        // Monthly subscription: 1 day per week (4 days/month, usage_limit: 4)
         PricingRule::create([
             'space_id' => $coWorking->id,
-
             'booking_type' => BookingType::CoWorking,
-            'duration_type' => DurationType::Weekly,
+            'duration_type' => DurationType::Monthly,
             'price' => 120.00,
+            'min_people' => 1, // Used to identify subscription tier
+            'max_people' => 1,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
+        // Monthly subscription: 3 days per week (12 days/month, usage_limit: 12)
         PricingRule::create([
             'space_id' => $coWorking->id,
-
             'booking_type' => BookingType::CoWorking,
             'duration_type' => DurationType::Monthly,
             'price' => 300.00,
+            'min_people' => 3, // Used to identify subscription tier
+            'max_people' => 3,
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
+        // Monthly subscription: Unlimited (mon-fri, no usage_limit)
         PricingRule::create([
             'space_id' => $coWorking->id,
-
             'booking_type' => BookingType::CoWorking,
             'duration_type' => DurationType::Monthly,
             'price' => 450.00,
+            'min_people' => 999, // Used to identify unlimited tier
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);
 
         // === Light Therapy Pricing ===
 
-        // Private session
+        // Private session (2 hours, one-time)
         PricingRule::create([
             'space_id' => $lightCenter->id,
-
             'booking_type' => BookingType::LightTherapy,
             'duration_type' => DurationType::Session,
             'price' => 120.00,
@@ -422,10 +408,20 @@ class SpacesAndPricingSeeder extends Seeder
             'valid_from' => $validFrom,
         ]);
 
-        // Night arrangement (overnight + session)
+        // Private session subscription (4 sessions per month)
         PricingRule::create([
             'space_id' => $lightCenter->id,
+            'booking_type' => BookingType::LightTherapy,
+            'duration_type' => DurationType::Monthly,
+            'price' => 400.00,
+            'min_people' => 1, // Used to identify session-only subscription
+            'is_active' => true,
+            'valid_from' => $validFrom,
+        ]);
 
+        // Private overnight package (accommodation + session, one-time)
+        PricingRule::create([
+            'space_id' => $lightCenter->id,
             'booking_type' => BookingType::LightTherapy,
             'duration_type' => DurationType::Night,
             'price' => 440.00,
@@ -433,13 +429,13 @@ class SpacesAndPricingSeeder extends Seeder
             'valid_from' => $validFrom,
         ]);
 
-        // Monthly subscription (4 sessions)
+        // Private overnight package subscription (4 overnight sessions per month)
         PricingRule::create([
             'space_id' => $lightCenter->id,
-
             'booking_type' => BookingType::LightTherapy,
             'duration_type' => DurationType::Monthly,
-            'price' => 400.00,
+            'price' => 1600.00,
+            'min_people' => 2, // Used to identify overnight package subscription
             'is_active' => true,
             'valid_from' => $validFrom,
         ]);

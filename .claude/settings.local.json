@@ -1,22 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "mcp__laravel-boost__application-info",
-      "Bash(php /Users/sindo/Sites/thecenter/artisan make:enum:*)",
-      "Bash(php:*)",
-      "Bash(vendor/bin/pint:*)",
-      "mcp__laravel-boost__database-query",
-      "mcp__laravel-boost__tinker",
-      "mcp__laravel-boost__database-schema",
-      "Bash(git checkout:*)",
-      "mcp__laravel-boost__search-docs",
-      "mcp__laravel-boost__list-artisan-commands",
-      "Bash(composer require:*)",
-      "Bash(/Users/sindo/Sites/thecenter/vendor/bin/pint:*)",
-      "mcp__laravel-boost__get-config",
-      "mcp__laravel-boost__get-absolute-url",
-      "Bash(find:*)"
-    ]
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan make:migration populate_base_duration_type_for_quarterly_rules --table=pricing_rules)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan tinker --execute=\"App\\Models\\PricingRule::where(''duration_type'', ''kwartaal'')->get([''id'', ''space_id'', ''price'', ''base_duration_type''])->each(fn($r) => print_r([''id'' => $r->id, ''space_id'' => $r->space_id, ''price'' => $r->price, ''base_duration_type'' => $r->base_duration_type?->value]));\")",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" vendor/bin/pint --dirty)",
+      "Bash(\"/Users/sindo/Library/Application Support/Herd/bin/php\" artisan make:controller HomeController)",
+      "WebFetch(domain:www.het-groene-huis.be)"
+    ],
+    "deny": [],
+    "ask": []
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [

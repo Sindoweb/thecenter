@@ -62,7 +62,17 @@ class PricingRuleResource extends Resource
                         DurationType::Monthly->value => 'Maandelijks',
                         DurationType::Quarterly->value => 'Kwartaal',
                     ])
-                    ->native(false),
+                    ->native(false)
+                    ->live(),
+                Forms\Components\Select::make('base_duration_type')
+                    ->label('Basis duurtype (voor abonnementen)')
+                    ->options([
+                        DurationType::HalfDay->value => 'Halve Dag',
+                        DurationType::FullDay->value => 'Hele Dag',
+                    ])
+                    ->native(false)
+                    ->visible(fn (Forms\Get $get) => $get('duration_type') === DurationType::Quarterly->value)
+                    ->helperText('Selecteer welke duur (halve of hele dag) deze kwartaalprijs betreft'),
                 Forms\Components\TextInput::make('price')
                     ->label('Prijs')
                     ->required()
@@ -147,6 +157,17 @@ class PricingRuleResource extends Resource
                         DurationType::Monthly => 'Maandelijks',
                         DurationType::Quarterly => 'Kwartaal',
                     }),
+                Tables\Columns\TextColumn::make('base_duration_type')
+                    ->label('Basis duur')
+                    ->badge()
+                    ->color('gray')
+                    ->formatStateUsing(fn (?DurationType $state): string => $state ? match ($state) {
+                        DurationType::HalfDay => 'Halve Dag',
+                        DurationType::FullDay => 'Hele Dag',
+                        default => '-',
+                    } : '-')
+                    ->placeholder('-')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('price')
                     ->label('Prijs')
                     ->money('EUR')

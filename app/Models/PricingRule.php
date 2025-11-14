@@ -17,6 +17,7 @@ class PricingRule extends Model
         'space_id',
         'booking_type',
         'duration_type',
+        'base_duration_type',
         'price',
         'discount_percentage',
         'min_people',
@@ -31,6 +32,7 @@ class PricingRule extends Model
         return [
             'booking_type' => BookingType::class,
             'duration_type' => DurationType::class,
+            'base_duration_type' => DurationType::class,
             'price' => 'decimal:2',
             'discount_percentage' => 'decimal:2',
             'is_active' => 'boolean',

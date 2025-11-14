@@ -89,7 +89,8 @@ The system revolves around 8 primary models with complex relationships:
 "The Universe" is a combined space requiring both "The Glow" and "The Ray":
 - Booking The Universe automatically blocks both component spaces
 - Booking either component space blocks The Universe
-- All handled in `BookingValidationService::getConflictingSpaceIds()`
+- Space combinations are stored in the `can_combine_with` JSON column on the spaces table
+- All conflict checking handled in `BookingValidationService::getConflictingSpaceIds()`
 
 #### 2. Conflict Detection
 
@@ -103,8 +104,8 @@ Complex overlap detection in `BookingValidationService`:
 
 Co-working has dynamic capacity calculated in `BookingValidationService::getCoWorkingCapacity()`:
 - Base: 6 people in dedicated co-working area
-- When "The Glow" is available: +6 capacity
-- When "The Ray" is available: +10 capacity
+- When "The Glow" is available: +8 capacity
+- When "The Ray" is available: +12 capacity
 - Automatically calculated for availability checks
 
 #### 4. Booking Status Flow
@@ -124,6 +125,27 @@ Handled by `SubscriptionService`:
 - Tracks usage count vs. usage limits
 - Supports unlimited subscriptions (therapy, co-working)
 - Automatically resets usage count on renewal
+
+**Conference Room Quarterly Subscriptions:**
+- Customer reserves 4 bookings (half or full days) per quarter at a fixed price
+- 20% discount applied to standard rates
+- `usage_limit: 4` per quarter
+- Each booking increments `usage_count`
+- Can mix half-day and full-day bookings within the 4-booking allowance
+- Usage resets every quarter (3 months)
+
+**Co-Working Subscription Tiers:**
+- Subscriptions have a `usage_limit` field (e.g., 4 for 1 day/week, 12 for 3 days/week)
+- Unlimited subscriptions have `usage_limit: null`
+- Each day used increments `usage_count`
+- When `usage_count >= usage_limit`, customer must upgrade or wait for renewal
+- The `min_people`/`max_people` fields in pricing rules are used to distinguish subscription tiers (1, 3, 999 for unlimited)
+
+**Light Therapy Subscription Tiers:**
+- Session subscription: 4 sessions/month for €400 (`usage_limit: 4`, identified by `min_people: 1`)
+- Overnight package subscription: 4 overnight sessions/month for €1,600 (`usage_limit: 4`, identified by `min_people: 2`)
+- Each session used increments `usage_count`
+- Usage resets monthly
 
 ### Service Layer Architecture
 
@@ -159,12 +181,15 @@ Generates `.ics` calendar attachments for booking confirmation emails.
 
 ### Enums
 
-All enums use PascalCase values (e.g., `ConferenceRoom`, `HalfDay`):
-- `SpaceType`: ConferenceRoom, Accommodation, CoWorking, TherapyRoom, Combined
-- `BookingType`: Conference, Accommodation, CoWorking, LightTherapy, Package
-- `BookingStatus`: Pending, Confirmed, Cancelled, Completed, NoShow
-- `PaymentStatus`: Pending, Paid, Failed, Refunded, PartiallyRefunded
-- `DurationType`: HalfDay, FullDay, Night, Session, DayPass, Weekly, Monthly, Quarterly
+**Important**: Enums are located in the root `app/` namespace (not `app/Enums/`). All enums use snake_case string values and some use Dutch terms:
+
+- `SpaceType`: `conference_room`, `accommodation`, `co_working`, `therapy_room`, `combined`
+- `BookingType`: `conferentie` (Dutch!), `accommodation`, `co_working`, `light_therapy`, `package`
+- `BookingStatus`: `pending`, `confirmed`, `cancelled`, `completed`, `no_show`
+- `PaymentStatus`: `pending`, `paid`, `failed`, `refunded`, `partially_refunded`
+- `DurationType`: `halve_dag`, `hele_dag`, `nacht`, `sessie`, `dagpas`, `wekelijks`, `maandelijks`, `kwartaal` (all Dutch!)
+
+**Critical**: When working with database queries or validation, use the snake_case/Dutch string values, NOT the PascalCase enum names.
 
 ### Filament Admin Resources
 
@@ -290,6 +315,10 @@ APP_CENTER_PARKING_INFO="Free parking available on-site"
 - Use `casts()` method for Laravel 12
 - Add scopes for common queries (e.g., `scopeUpcoming()`, `scopeByStatus()`)
 
+#### Model Observers
+
+`BookingObserver` automatically sets `total_price` equal to `price` when creating/updating bookings if `total_price` is null. This ensures the total price is always initialized before discounts are applied.
+
 ### Services
 
 - Business logic extracted to service classes
@@ -308,27 +337,28 @@ APP_CENTER_PARKING_INFO="Free parking available on-site"
 All pricing is seeded via `SpacesAndPricingSeeder`. Modify through Filament admin panel.
 
 ### Conference Rooms
-- The Glow (6 people): €200 half-day, €380 full-day
-- The Ray (10 people): €275 half-day, €500 full-day
-- The Universe (16 people): €400 half-day, €700 full-day
-- Quarterly subscriptions: 10% discount
+- The Glow (8 people): €140 half-day, €250 full-day
+- The Ray (12 people): €160 half-day, €300 full-day
+- The Universe (20 people): €400 half-day, €700 full-day
+- Quarterly subscriptions: Reserve 4 half or full days per quarter with 20% discount on standard rates
 
 ### B&B Accommodation
-- Single room: €110/night
-- Both rooms: €200/night
-- Private rental: €320/night
-- Weekend + therapy package: +€50/person
+- Single room (The Sun or The Moon, up to 2 people): €110/night
+- Both rooms (up to 4 people): €200/night
+- Weekend package (Fri-Sun): €110/night base + €50 per person per 2-hour light therapy session
 
 ### Co-Working
-- Day pass: €35
-- 1 day/week: €120/month
-- 3 days/week: €300/month
-- Unlimited: €450/month
+- Day pass: €35 (one-time booking)
+- Monthly subscription tiers:
+  - 1 day/week: €120/month (usage_limit: 4 days/month)
+  - 3 days/week: €300/month (usage_limit: 12 days/month)
+  - Unlimited (mon-fri): €450/month (usage_limit: null)
 
 ### Light Therapy
-- Private session (2h): €120
-- Night arrangement: €440
-- 4 sessions/month: €400/month subscription
+- Private session (2 hours): €120
+- Private session subscription: 4 sessions/month for €400
+- Private overnight package (stay + session): €440
+- Private overnight package subscription: 4 sessions/month for €1,600
 
 ## Known Issues
 
