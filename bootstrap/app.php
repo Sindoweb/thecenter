@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Exclude Mollie webhook routes from CSRF verification
+        $middleware->validateCsrfTokens(except: [
+            'webhook/mollie/*',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

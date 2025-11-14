@@ -21,5 +21,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Seed spaces and pricing rules
+        $this->call(SpacesAndPricingSeeder::class);
     }
 }

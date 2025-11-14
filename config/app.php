@@ -56,6 +56,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | The Center Contact Information
+    |--------------------------------------------------------------------------
+    |
+    | These values are used in email templates and notifications to provide
+    | contact information and location details to customers.
+    |
+    */
+
+    'center_address' => env('APP_CENTER_ADDRESS'),
+    'center_phone' => env('APP_CENTER_PHONE'),
+    'center_parking_info' => env('APP_CENTER_PARKING_INFO'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

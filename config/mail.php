@@ -115,4 +115,16 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Email Address
+    |--------------------------------------------------------------------------
+    |
+    | This email address will receive notifications about new bookings and
+    | other administrative events that occur in the system.
+    |
+    */
+
+    'admin_email' => env('MAIL_ADMIN_EMAIL'),
+
 ];

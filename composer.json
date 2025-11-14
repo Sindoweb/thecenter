@@ -11,6 +11,7 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "livewire/flux-pro": "*",
+        "mollie/laravel-cashier-mollie": "^2.18",
         "statikbe/laravel-filament-flexible-content-blocks": "^2.6"
     },
     "require-dev": {

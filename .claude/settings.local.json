@@ -1,6 +1,25 @@
 {
+  "permissions": {
+    "allow": [
+      "mcp__laravel-boost__application-info",
+      "Bash(php /Users/sindo/Sites/thecenter/artisan make:enum:*)",
+      "Bash(php:*)",
+      "Bash(vendor/bin/pint:*)",
+      "mcp__laravel-boost__database-query",
+      "mcp__laravel-boost__tinker",
+      "mcp__laravel-boost__database-schema",
+      "Bash(git checkout:*)",
+      "mcp__laravel-boost__search-docs",
+      "mcp__laravel-boost__list-artisan-commands",
+      "Bash(composer require:*)",
+      "Bash(/Users/sindo/Sites/thecenter/vendor/bin/pint:*)",
+      "mcp__laravel-boost__get-config",
+      "mcp__laravel-boost__get-absolute-url",
+      "Bash(find:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "laravel-boost"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }
